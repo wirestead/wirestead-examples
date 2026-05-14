@@ -1,0 +1,56 @@
+name: CMake
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  fetchcontent:
+    name: FetchContent
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ libboost-system-dev libboost-thread-dev
+
+      - name: Configure
+        run: cmake -S . -B build -DUNILINK_EXAMPLES_USE_FETCHCONTENT=ON
+
+      - name: Build
+        run: cmake --build build --parallel
+
+  vcpkg:
+    name: vcpkg
+    runs-on: ubuntu-24.04
+
+    env:
+      VCPKG_ROOT: ${{ github.workspace }}/vcpkg
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Checkout vcpkg
+        uses: actions/checkout@v4
+        with:
+          repository: microsoft/vcpkg
+          path: vcpkg
+
+      - name: Bootstrap vcpkg
+        run: ./vcpkg/bootstrap-vcpkg.sh
+
+      - name: Configure
+        run: >
+          cmake -S . -B build-vcpkg
+          -DUNILINK_EXAMPLES_USE_FETCHCONTENT=OFF
+          -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+
+      - name: Build
+        run: cmake --build build-vcpkg --parallel

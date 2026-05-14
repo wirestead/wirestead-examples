@@ -49,9 +49,11 @@ vcpkg package is named `jwsung91-unilink` and exports the CMake package
 ```bash
 cmake -S . -B build-vcpkg \
   -DUNILINK_EXAMPLES_USE_FETCHCONTENT=OFF \
-  -DCMAKE_TOOLCHAIN_FILE=/path/to/vcpkg/scripts/buildsystems/vcpkg.cmake
+  -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
 cmake --build build-vcpkg
 ```
+
+Set `VCPKG_ROOT` to your vcpkg checkout path before running this command.
 
 ### Option 3: Use a local unilink source checkout
 
@@ -104,6 +106,13 @@ transport-specific run commands.
 - TCP and UDP examples can usually be run locally.
 - UDS examples are supported on Unix-like platforms.
 - Serial examples may require an available serial device or loopback setup.
+
+## Tested With
+
+- CMake 3.28
+- GCC 13
+- `unilink` v0.7.1
+- vcpkg package `jwsung91-unilink` 0.7.1
 
 ## Repository Layout
 
