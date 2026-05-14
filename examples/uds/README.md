@@ -20,10 +20,10 @@ Unix domain socket examples for local IPC. Requires Linux or macOS.
 
 ```bash
 # Terminal 1
-./sync_uds_echo_server [socket_path]
+./build/bin/sync_uds_echo_server [socket_path]
 
 # Terminal 2
-./sync_uds_echo_client [socket_path]
+./build/bin/sync_uds_echo_client [socket_path]
 ```
 
 Default socket path: `/tmp/unilink_echo.sock`. Type messages in the client; `/quit` disconnects.

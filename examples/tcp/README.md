@@ -18,12 +18,12 @@
 
 ```bash
 # Echo pair (default port 8080)
-./sync_tcp_echo_server [port]
-./sync_tcp_echo_client [host] [port]
+./build/bin/sync_tcp_echo_server [port]
+./build/bin/sync_tcp_echo_client [host] [port]
 
-# Broadcast server — connect multiple clients to see messages relayed
-./sync_tcp_broadcast_server [port]
-./sync_tcp_echo_client 127.0.0.1 8080   # connect as many as you like
+# Broadcast server - connect multiple clients to see messages relayed
+./build/bin/sync_tcp_broadcast_server [port]
+./build/bin/sync_tcp_echo_client 127.0.0.1 8080
 ```
 
 Type messages in any client terminal. `/quit` disconnects.
@@ -41,6 +41,6 @@ Type messages in any client terminal. `/quit` disconnects.
 ss -tlnp | grep :8080
 
 # Run on a different port
-./tcp_echo_server 9001
-./tcp_echo_client 127.0.0.1 9001
+./build/bin/sync_tcp_echo_server 9001
+./build/bin/sync_tcp_echo_client 127.0.0.1 9001
 ```

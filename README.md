@@ -18,27 +18,46 @@ https://github.com/jwsung91/unilink
 
 | Category | Mode | Description |
 |---|---|---|
-| TCP | sync / async | Basic TCP client/server communication |
-| UDP | sync / async | Datagram-based communication |
-| UDS | sync / async | Unix Domain Socket local IPC |
-| Serial | sync / async | Serial communication examples |
+| [TCP](examples/tcp/) | sync / async | Basic TCP client/server communication |
+| [UDP](examples/udp/) | sync / async | Datagram-based communication |
+| [UDS](examples/uds/) | sync / async | Unix Domain Socket local IPC |
+| [Serial](examples/serial/) | sync / async | Serial communication examples |
 
 Example sources live under `examples/` and preserve the transport-focused
 layout from the core repository.
 
 ## Build
 
-### Option 1: Fetch unilink automatically
+### Option 1: No local unilink install
+
+This is the recommended path for most users. CMake fetches `unilink`
+automatically.
 
 ```bash
-cmake -S . -B build -DUNILINK_EXAMPLES_USE_FETCHCONTENT=ON
+cmake -S . -B build
 cmake --build build
 ```
 
-### Option 2: Use installed unilink package
+This mode requires network access during the first configure step.
+
+### Option 2: Use a local unilink source checkout
+
+Use this when you already have the core repository locally and want to avoid
+downloading it again.
 
 ```bash
-cmake -S . -B build-installed -DUNILINK_EXAMPLES_USE_FETCHCONTENT=OFF
+cmake -S . -B build \
+  -DUNILINK_EXAMPLES_USE_FETCHCONTENT=ON \
+  -DFETCHCONTENT_SOURCE_DIR_UNILINK=/path/to/unilink
+cmake --build build
+```
+
+### Option 3: Use an installed unilink package
+
+```bash
+cmake -S . -B build-installed \
+  -DUNILINK_EXAMPLES_USE_FETCHCONTENT=OFF \
+  -DCMAKE_PREFIX_PATH=/path/to/unilink/install
 cmake --build build-installed
 ```
 
@@ -64,6 +83,9 @@ Examples:
 ./build/bin/sync_serial_echo
 ```
 
+See [examples/README.md](examples/README.md) for the full binary list and
+transport-specific run commands.
+
 ## Notes
 
 - TCP and UDP examples can usually be run locally.
@@ -78,6 +100,7 @@ Examples:
 ├── cmake/
 │   └── FetchUnilink.cmake
 ├── examples/
+│   ├── README.md
 │   ├── tcp/
 │   ├── udp/
 │   ├── uds/

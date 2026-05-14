@@ -17,11 +17,11 @@
 ## Usage
 
 ```bash
-# Terminal 1 — receiver (default port 9000)
-./sync_udp_receiver [port]
+# Terminal 1 - receiver (default port 9000)
+./build/bin/sync_udp_receiver [port]
 
-# Terminal 2 — sender (default target 127.0.0.1:9000)
-./sync_udp_sender [host] [port]
+# Terminal 2 - sender (default target 127.0.0.1:9000)
+./build/bin/sync_udp_sender [host] [port]
 ```
 
 Type lines in the sender terminal. Each line is sent immediately and printed by the receiver. `/quit` exits the sender.
