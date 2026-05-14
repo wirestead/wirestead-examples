@@ -21,6 +21,7 @@ endif()
 # local fallback so the migrated example CMake remains reusable in package mode.
 if(NOT COMMAND unilink_configure_executable)
   function(unilink_configure_executable target)
+    # Package-mode fallback: no extra per-target setup is required here.
   endfunction()
 endif()
 
