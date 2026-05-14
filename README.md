@@ -28,10 +28,10 @@ layout from the core repository.
 
 ## Build
 
-### Option 1: No local unilink install
+### Option 1: Build without installing unilink
 
-This is the recommended path for most users. CMake fetches `unilink`
-automatically.
+This is the quickest path for trying the examples. CMake fetches the stable
+`unilink` release configured in `cmake/FetchUnilink.cmake`.
 
 ```bash
 cmake -S . -B build
@@ -40,7 +40,20 @@ cmake --build build
 
 This mode requires network access during the first configure step.
 
-### Option 2: Use a local unilink source checkout
+### Option 2: Use vcpkg
+
+Use this when you want `unilink` and its dependencies managed by vcpkg. The
+vcpkg package is named `jwsung91-unilink` and exports the CMake package
+`unilink`.
+
+```bash
+cmake -S . -B build-vcpkg \
+  -DUNILINK_EXAMPLES_USE_FETCHCONTENT=OFF \
+  -DCMAKE_TOOLCHAIN_FILE=/path/to/vcpkg/scripts/buildsystems/vcpkg.cmake
+cmake --build build-vcpkg
+```
+
+### Option 3: Use a local unilink source checkout
 
 Use this when you already have the core repository locally and want to avoid
 downloading it again.
@@ -52,7 +65,7 @@ cmake -S . -B build \
 cmake --build build
 ```
 
-### Option 3: Use an installed unilink package
+### Option 4: Use an installed unilink package
 
 ```bash
 cmake -S . -B build-installed \
@@ -105,7 +118,8 @@ transport-specific run commands.
 │   ├── udp/
 │   ├── uds/
 │   └── serial/
-└── scripts/
+├── scripts/
+└── vcpkg.json
 ```
 
 ## License

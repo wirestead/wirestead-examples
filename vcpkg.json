@@ -1,0 +1,7 @@
+{
+  "name": "unilink-examples",
+  "version-string": "0.1.0",
+  "dependencies": [
+    "jwsung91-unilink"
+  ]
+}
