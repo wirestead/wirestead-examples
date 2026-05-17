@@ -126,6 +126,7 @@ transport-specific run commands.
 ```text
 .
 ├── CMakeLists.txt
+├── CONTRIBUTING.md
 ├── cmake/
 │   └── FetchUnilink.cmake
 ├── examples/
@@ -137,6 +138,10 @@ transport-specific run commands.
 ├── scripts/
 └── vcpkg.json
 ```
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for formatting and validation guidance.
 
 ## License
 
