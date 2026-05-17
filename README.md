@@ -32,8 +32,8 @@ layout from the core repository.
 
 ### Option 1: Build without installing unilink
 
-This is the quickest path for trying the examples. CMake fetches the stable
-`unilink` release configured in `cmake/FetchUnilink.cmake`.
+This is the quickest path for trying the examples. CMake fetches `unilink`
+v0.7.3 as configured in `cmake/FetchUnilink.cmake`.
 
 ```bash
 cmake -S . -B build
@@ -82,7 +82,9 @@ cmake --build build-installed
 
 Installed-package mode assumes `unilink` and its exported dependencies are
 discoverable by CMake, typically via `CMAKE_PREFIX_PATH` or a system install
-location.
+location. `unilink` v0.7.3 resolves its exported dependencies from
+`unilinkConfig.cmake`, so consumers do not need to call `find_package(spdlog)`
+before `find_package(unilink CONFIG REQUIRED)`.
 
 ## Run
 
@@ -115,8 +117,9 @@ transport-specific run commands.
 
 - CMake 3.28
 - GCC 13
-- `unilink` v0.7.1
-- vcpkg package `jwsung91-unilink` 0.7.1
+- `unilink` v0.7.3
+- vcpkg package `jwsung91-unilink` 0.7.3
+- Installed-package mode with a local `unilink` v0.7.3 install prefix
 
 ## Repository Layout
 

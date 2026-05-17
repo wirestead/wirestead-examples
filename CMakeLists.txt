@@ -13,7 +13,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 if(UNILINK_EXAMPLES_USE_FETCHCONTENT)
   include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/FetchUnilink.cmake)
 else()
-  find_package(spdlog CONFIG QUIET)
   find_package(unilink CONFIG REQUIRED)
 endif()
 

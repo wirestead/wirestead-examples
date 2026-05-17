@@ -1,5 +1,9 @@
 # Task: Improve unilink CMake package export dependencies
 
+Status for `unilink` v0.7.3: completed in the core package export. The examples
+repository no longer needs to call `find_package(spdlog CONFIG QUIET)` before
+`find_package(unilink CONFIG REQUIRED)`.
+
 ## Context
 
 Repository:
@@ -12,19 +16,21 @@ find_package(unilink CONFIG REQUIRED)
 target_link_libraries(example PRIVATE unilink::unilink)
 ```
 
-When `unilink` is consumed through vcpkg or an installed package, the exported
+Before the `unilink` v0.7.3 package export fix, when `unilink` was consumed
+through vcpkg or an installed package, the exported
 `unilink::unilink` target may reference dependency targets such as
 `spdlog::spdlog`. If those targets are not created before `unilinkTargets.cmake`
-is loaded, CMake generation can fail.
+is loaded, CMake generation could fail.
 
-The examples repository currently works around this by calling:
+The examples repository used to work around this by calling:
 
 ```cmake
 find_package(spdlog CONFIG QUIET)
 find_package(unilink CONFIG REQUIRED)
 ```
 
-This compatibility workaround belongs in the core package export instead.
+That compatibility workaround belonged in the core package export instead and
+has been removed from the examples repository for `unilink` v0.7.3.
 
 ## Goal
 
@@ -87,7 +93,6 @@ Validate at least these cases:
 ```bash
 cmake -S . -B build-install \
   -DCMAKE_INSTALL_PREFIX=/tmp/unilink-prefix \
-  -DUNILINK_BUILD_EXAMPLES=OFF \
   -DUNILINK_BUILD_TESTS=OFF \
   -DUNILINK_BUILD_DOCS=OFF
 cmake --build build-install
@@ -114,8 +119,9 @@ cmake --build build-vcpkg
 Consumers no longer need to call `find_package(spdlog CONFIG QUIET)` before
 `find_package(unilink CONFIG REQUIRED)`.
 
-The examples repository can later remove its compatibility workaround once the
-fixed `unilink` release and vcpkg package are available.
+The examples repository can remove its compatibility workaround when validating
+against `unilink` v0.7.3 or newer. The vcpkg path is also a 0.7.3 validation
+path once the registry provides `jwsung91-unilink` 0.7.3.
 
 ## Final Summary Required
 
