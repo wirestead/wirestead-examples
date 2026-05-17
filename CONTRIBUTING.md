@@ -17,25 +17,37 @@ that CI formatting checks pass on the pull request.
 
 ## Validation
 
-For build-related changes, validate both supported consumption paths when
-possible:
+For build-related changes, validate the supported consumption paths when
+possible. The recommended entry point is:
 
 ```bash
-cmake -S . -B build -DUNILINK_EXAMPLES_USE_FETCHCONTENT=ON
-cmake --build build --parallel
+scripts/verify.sh
+```
+
+The script always runs `git diff --check`, builds the FetchContent preset, and
+builds the vcpkg preset when `VCPKG_ROOT` is set. Use a vcpkg checkout that
+contains `jwsung91-unilink` 0.7.2 or newer. To include installed-package
+validation, pass an installed `unilink` prefix:
+
+```bash
+scripts/verify.sh --installed-prefix /path/to/unilink/install
+```
+
+Equivalent manual commands are:
+
+```bash
+cmake --preset fetchcontent
+cmake --build --preset fetchcontent --parallel
 ```
 
 ```bash
-cmake -S . -B build-vcpkg \
-  -DUNILINK_EXAMPLES_USE_FETCHCONTENT=OFF \
-  -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
-cmake --build build-vcpkg --parallel
+cmake --preset vcpkg
+cmake --build --preset vcpkg --parallel
 ```
 
-Also run:
-
 ```bash
-git diff --check
+UNILINK_INSTALL_PREFIX=/path/to/unilink/install cmake --preset installed
+cmake --build --preset installed --parallel
 ```
 
 If a check is not applicable, note that in the pull request.

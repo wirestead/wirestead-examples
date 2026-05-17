@@ -8,7 +8,7 @@
 
 ## Related Issues
 <!-- Link any related issues using keywords like "Fixes #123" or "Closes #456". -->
-- Fixes #
+- N/A
 
 ## Type of Change
 <!-- Please mark the relevant option(s) with an "x". -->
@@ -22,12 +22,10 @@
 ## Validation
 <!-- Check the items that apply, and note any skipped checks in Additional Context. -->
 - [ ] I have run `git diff --check`.
-- [ ] I have run the FetchContent build:
-      `cmake -S . -B build -DUNILINK_EXAMPLES_USE_FETCHCONTENT=ON`
-      and `cmake --build build --parallel`.
-- [ ] I have run the vcpkg build:
-      `cmake -S . -B build-vcpkg -DUNILINK_EXAMPLES_USE_FETCHCONTENT=OFF -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake`
-      and `cmake --build build-vcpkg --parallel`.
+- [ ] I have run `scripts/verify.sh`, or the equivalent preset builds below.
+- [ ] I have run the FetchContent build: `cmake --preset fetchcontent` and `cmake --build --preset fetchcontent --parallel`.
+- [ ] I have run the vcpkg build: `cmake --preset vcpkg` and `cmake --build --preset vcpkg --parallel`.
+- [ ] I have run installed-package validation, if the change affects package consumption.
 - [ ] I have run or confirmed formatting checks for C++ and CMake files.
 - [ ] I have updated documentation to reflect the change, if applicable.
 

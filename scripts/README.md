@@ -1,6 +1,9 @@
 # Scripts
 
-This directory is reserved for helper scripts related to building or running the
+This directory contains helper scripts related to building or running the
 examples.
 
-No helper scripts are required for the initial migration.
+- `verify.sh` runs the standard local validation flow. It checks whitespace,
+  builds the FetchContent preset, builds the vcpkg preset when `VCPKG_ROOT` is
+  set, and can validate an installed `unilink` package with
+  `--installed-prefix`.

@@ -36,8 +36,8 @@ This is the quickest path for trying the examples. CMake fetches `unilink`
 v0.7.3 as configured in `cmake/FetchUnilink.cmake`.
 
 ```bash
-cmake -S . -B build
-cmake --build build
+cmake --preset fetchcontent
+cmake --build --preset fetchcontent
 ```
 
 This mode requires network access during the first configure step.
@@ -49,15 +49,18 @@ vcpkg package is named `jwsung91-unilink` and exports the CMake package
 `unilink`.
 
 ```bash
-cmake -S . -B build-vcpkg \
-  -DUNILINK_EXAMPLES_USE_FETCHCONTENT=OFF \
-  -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
-cmake --build build-vcpkg
+cmake --preset vcpkg
+cmake --build --preset vcpkg
 ```
 
 Set `VCPKG_ROOT` to your vcpkg checkout path before running this command.
-If you do not have vcpkg yet, clone https://github.com/microsoft/vcpkg and run
-`bootstrap-vcpkg.sh`.
+Use a vcpkg checkout that contains `jwsung91-unilink` 0.7.2 or newer. The
+official `microsoft/vcpkg` registry includes `jwsung91-unilink` 0.7.2.
+
+```bash
+git clone https://github.com/microsoft/vcpkg "$VCPKG_ROOT"
+"$VCPKG_ROOT/bootstrap-vcpkg.sh"
+```
 
 ### Option 3: Use a local unilink source checkout
 
@@ -65,19 +68,16 @@ Use this when you already have the core repository locally and want to avoid
 downloading it again.
 
 ```bash
-cmake -S . -B build \
-  -DUNILINK_EXAMPLES_USE_FETCHCONTENT=ON \
+cmake --preset fetchcontent \
   -DFETCHCONTENT_SOURCE_DIR_UNILINK=/path/to/unilink
-cmake --build build
+cmake --build --preset fetchcontent
 ```
 
 ### Option 4: Use an installed unilink package
 
 ```bash
-cmake -S . -B build-installed \
-  -DUNILINK_EXAMPLES_USE_FETCHCONTENT=OFF \
-  -DCMAKE_PREFIX_PATH=/path/to/unilink/install
-cmake --build build-installed
+UNILINK_INSTALL_PREFIX=/path/to/unilink/install cmake --preset installed
+cmake --build --preset installed
 ```
 
 Installed-package mode assumes `unilink` and its exported dependencies are
@@ -88,20 +88,20 @@ before `find_package(unilink CONFIG REQUIRED)`.
 
 ## Run
 
-Binaries are generated under:
+Binaries are generated under the selected preset's build directory:
 
 ```text
-build/bin
+build/<preset>/bin
 ```
 
 Examples:
 
 ```bash
-./build/bin/sync_tcp_echo_server
-./build/bin/sync_tcp_echo_client
-./build/bin/async_udp_receiver
-./build/bin/sync_uds_echo_server
-./build/bin/sync_serial_echo
+./build/fetchcontent/bin/sync_tcp_echo_server
+./build/fetchcontent/bin/sync_tcp_echo_client
+./build/fetchcontent/bin/async_udp_receiver
+./build/fetchcontent/bin/sync_uds_echo_server
+./build/fetchcontent/bin/sync_serial_echo
 ```
 
 See [examples/README.md](examples/README.md) for the full binary list and
@@ -118,7 +118,7 @@ transport-specific run commands.
 - CMake 3.28
 - GCC 13
 - `unilink` v0.7.3
-- vcpkg package `jwsung91-unilink` 0.7.3
+- vcpkg package `jwsung91-unilink` 0.7.2
 - Installed-package mode with a local `unilink` v0.7.3 install prefix
 
 ## Repository Layout
@@ -126,6 +126,7 @@ transport-specific run commands.
 ```text
 .
 ├── CMakeLists.txt
+├── CMakePresets.json
 ├── CONTRIBUTING.md
 ├── cmake/
 │   └── FetchUnilink.cmake

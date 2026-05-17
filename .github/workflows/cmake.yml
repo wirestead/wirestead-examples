@@ -1,5 +1,9 @@
 name: CMake
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
     branches: [main]
@@ -10,6 +14,7 @@ jobs:
   fetchcontent:
     name: FetchContent
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
 
     steps:
       - name: Checkout
@@ -21,14 +26,15 @@ jobs:
           sudo apt-get install -y cmake g++ libboost-system-dev libboost-thread-dev
 
       - name: Configure
-        run: cmake -S . -B build -DUNILINK_EXAMPLES_USE_FETCHCONTENT=ON
+        run: cmake --preset fetchcontent
 
       - name: Build
-        run: cmake --build build --parallel
+        run: cmake --build --preset fetchcontent --parallel
 
   vcpkg:
     name: vcpkg
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
 
     env:
       VCPKG_ROOT: ${{ github.workspace }}/vcpkg
@@ -47,10 +53,54 @@ jobs:
         run: ./vcpkg/bootstrap-vcpkg.sh
 
       - name: Configure
-        run: >
-          cmake -S . -B build-vcpkg
-          -DUNILINK_EXAMPLES_USE_FETCHCONTENT=OFF
-          -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+        run: cmake --preset vcpkg
 
       - name: Build
-        run: cmake --build build-vcpkg --parallel
+        run: cmake --build --preset vcpkg --parallel
+
+  installed-package:
+    name: Installed package
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    env:
+      UNILINK_INSTALL_PREFIX: ${{ runner.temp }}/unilink-prefix
+
+    steps:
+      - name: Checkout examples
+        uses: actions/checkout@v4
+        with:
+          path: unilink-examples
+
+      - name: Checkout unilink
+        uses: actions/checkout@v4
+        with:
+          repository: jwsung91/unilink
+          ref: v0.7.3
+          path: unilink
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ libboost-system-dev libboost-thread-dev libspdlog-dev
+
+      - name: Configure unilink
+        run: >
+          cmake -S unilink -B build-unilink-install
+          -DCMAKE_INSTALL_PREFIX=$UNILINK_INSTALL_PREFIX
+          -DUNILINK_BUILD_TESTS=OFF
+          -DUNILINK_BUILD_DOCS=OFF
+
+      - name: Build unilink
+        run: cmake --build build-unilink-install --parallel
+
+      - name: Install unilink
+        run: cmake --install build-unilink-install
+
+      - name: Configure examples
+        working-directory: unilink-examples
+        run: cmake --preset installed
+
+      - name: Build examples
+        working-directory: unilink-examples
+        run: cmake --build --preset installed --parallel

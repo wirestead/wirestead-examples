@@ -1,0 +1,56 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "fetchcontent",
+      "displayName": "FetchContent",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_CXX_STANDARD": "20",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "UNILINK_EXAMPLES_USE_FETCHCONTENT": "ON"
+      }
+    },
+    {
+      "name": "vcpkg",
+      "displayName": "vcpkg",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_CXX_STANDARD": "20",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+        "UNILINK_EXAMPLES_USE_FETCHCONTENT": "OFF"
+      }
+    },
+    {
+      "name": "installed",
+      "displayName": "Installed unilink package",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_CXX_STANDARD": "20",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_PREFIX_PATH": "$env{UNILINK_INSTALL_PREFIX}",
+        "UNILINK_EXAMPLES_USE_FETCHCONTENT": "OFF"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "fetchcontent",
+      "configurePreset": "fetchcontent"
+    },
+    {
+      "name": "vcpkg",
+      "configurePreset": "vcpkg"
+    },
+    {
+      "name": "installed",
+      "configurePreset": "installed"
+    }
+  ]
+}
