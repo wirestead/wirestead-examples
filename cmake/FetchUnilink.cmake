@@ -16,7 +16,7 @@ set(UNILINK_ENABLE_INSTALL
 FetchContent_Declare(
   unilink
   GIT_REPOSITORY https://github.com/jwsung91/unilink.git
-  GIT_TAG v0.7.5
+  GIT_TAG v0.8.2
 )
 
 FetchContent_MakeAvailable(unilink)
