@@ -1,6 +1,6 @@
 # wirestead-examples
 
-[![CMake](https://github.com/unilink-lab/unilink-examples/actions/workflows/cmake.yml/badge.svg)](https://github.com/unilink-lab/unilink-examples/actions/workflows/cmake.yml)
+[![CMake](https://github.com/wirestead/unilink-examples/actions/workflows/cmake.yml/badge.svg)](https://github.com/wirestead/unilink-examples/actions/workflows/cmake.yml)
 
 Practical examples for using Wirestead in real-world C++ communication
 scenarios.
@@ -33,7 +33,7 @@ layout from the core repository.
 ### Option 1: Build without installing Wirestead
 
 This is the quickest path for trying the examples. CMake fetches Wirestead
-v0.9.0-rc.2 as configured in `cmake/FetchWirestead.cmake`.
+v0.9.0 as configured in `cmake/FetchWirestead.cmake`.
 
 ```bash
 cmake --preset fetchcontent
@@ -44,19 +44,19 @@ This mode requires network access during the first configure step.
 
 ### Option 2: Use vcpkg
 
-Use this while the official vcpkg registry still exposes the legacy/current
-`jwsung91-unilink` port. The examples prefer `wiresteadConfig.cmake` and fall
-back to the legacy `unilinkConfig.cmake` package when only the current vcpkg
-port is installed.
+Use this with a vcpkg checkout that provides the canonical `wirestead` port.
+The examples prefer `wiresteadConfig.cmake` and fall back to the legacy
+`unilinkConfig.cmake` package only when an installed compatibility package is
+available.
 
 ```bash
 cmake --preset vcpkg
 cmake --build --preset vcpkg
 ```
 
-Set `VCPKG_ROOT` to your vcpkg checkout path before running this command.
-Use a vcpkg checkout that contains `jwsung91-unilink` 0.7.2 or newer until the
-official `wirestead` port is available.
+Set `VCPKG_ROOT` to your vcpkg checkout path before running this command. Until
+the official registry includes `wirestead`, use a vcpkg checkout or overlay that
+contains the new port, or skip this preset during local validation.
 
 ```bash
 git clone https://github.com/microsoft/vcpkg "$VCPKG_ROOT"
@@ -118,8 +118,8 @@ transport-specific run commands.
 
 - CMake 3.28
 - GCC 13
-- Wirestead v0.9.0-rc.2
-- legacy/current vcpkg package `jwsung91-unilink` 0.7.2
+- Wirestead v0.9.0
+- vcpkg package `wirestead` 0.9.0
 - Installed-package mode with a local Wirestead v0.9.x install prefix
 
 ## Repository Layout

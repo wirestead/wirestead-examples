@@ -17,19 +17,20 @@
 #include <iostream>
 #include <string>
 
-#include "unilink/unilink.hpp"
+#include "wirestead/wirestead.hpp"
 
 int main(int argc, char** argv) {
   std::string host = (argc > 1) ? argv[1] : "127.0.0.1";
   uint16_t port = (argc > 2) ? static_cast<uint16_t>(std::stoi(argv[2])) : 8080;
 
   auto client =
-      unilink::tcp_client(host, port)
-          .on_connect(
-              [](const unilink::ConnectionContext&) { std::cout << "Connected. Type messages or '/quit' to exit.\n"; })
-          .on_data([](const unilink::MessageContext& ctx) { std::cout << "[server] " << ctx.data() << "\n"; })
-          .on_disconnect([](const unilink::ConnectionContext&) { std::cout << "Disconnected.\n"; })
-          .on_error([](const unilink::ErrorContext& ctx) { std::cerr << "[error] " << ctx.message() << "\n"; })
+      wirestead::tcp_client(host, port)
+          .on_connect([](const wirestead::ConnectionContext&) {
+            std::cout << "Connected. Type messages or '/quit' to exit.\n";
+          })
+          .on_data([](const wirestead::MessageContext& ctx) { std::cout << "[server] " << ctx.data() << "\n"; })
+          .on_disconnect([](const wirestead::ConnectionContext&) { std::cout << "Disconnected.\n"; })
+          .on_error([](const wirestead::ErrorContext& ctx) { std::cerr << "[error] " << ctx.message() << "\n"; })
           .build();
 
   if (!client->start_sync()) {

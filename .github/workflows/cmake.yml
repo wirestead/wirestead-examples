@@ -34,8 +34,8 @@ jobs:
   vcpkg:
     name: vcpkg
     # Re-enable after the official vcpkg registry provides the canonical
-    # `wirestead` port. The legacy/current `jwsung91-unilink` port is not a
-    # stable canonical validation path for this repository anymore.
+    # `wirestead` port. Legacy UniLink ports are not stable canonical
+    # validation paths for this repository anymore.
     if: false
     runs-on: ubuntu-24.04
     timeout-minutes: 30
@@ -80,7 +80,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           repository: wirestead/wirestead
-          ref: v0.9.0-rc.2
+          ref: v0.9.0
           path: wirestead
 
       - name: Install system dependencies

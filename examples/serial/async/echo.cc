@@ -20,7 +20,7 @@
 #include <string>
 #include <thread>
 
-#include "unilink/unilink.hpp"
+#include "wirestead/wirestead.hpp"
 
 /**
  * @brief Asynchronous Serial Echo Example
@@ -35,23 +35,23 @@ int main(int argc, char* argv[]) {
   std::cout << "--- Async Serial Echo ---\n";
   std::cout << "Opening " << device << " at " << baud << " baud (non-blocking)\n";
 
-  std::shared_ptr<unilink::wrapper::Serial> port;
+  std::shared_ptr<wirestead::wrapper::Serial> port;
 
-  auto builder = unilink::serial(device, baud);
+  auto builder = wirestead::serial(device, baud);
   builder
-      .on_connect([](const unilink::ConnectionContext&) {
+      .on_connect([](const wirestead::ConnectionContext&) {
         std::cout << "\n[Event] Serial port opened successfully!\n"
                   << "> " << std::flush;
       })
-      .on_data([](const unilink::MessageContext& ctx) {
+      .on_data([](const wirestead::MessageContext& ctx) {
         std::cout << "\n[Received] " << ctx.data() << "\n"
                   << "> " << std::flush;
       })
-      .on_disconnect([](const unilink::ConnectionContext&) {
+      .on_disconnect([](const wirestead::ConnectionContext&) {
         std::cout << "\n[Event] Serial port closed/disconnected.\n"
                   << "> " << std::flush;
       })
-      .on_error([](const unilink::ErrorContext& ctx) {
+      .on_error([](const wirestead::ErrorContext& ctx) {
         std::cerr << "\n[Error] " << ctx.message() << "\n"
                   << "> " << std::flush;
       });

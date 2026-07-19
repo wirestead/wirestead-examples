@@ -26,7 +26,7 @@ Unix domain socket examples for local IPC. Requires Linux or macOS.
 ./build/fetchcontent/bin/sync_uds_echo_client [socket_path]
 ```
 
-Default socket path: `/tmp/unilink_echo.sock`. Type messages in the client; `/quit` disconnects.
+Default socket path: `/tmp/wirestead_echo.sock`. Type messages in the client; `/quit` disconnects.
 
 ## Notes
 

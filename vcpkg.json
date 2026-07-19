@@ -1,7 +1,7 @@
 {
-  "name": "unilink-examples",
+  "name": "wirestead-examples",
   "version-string": "0.1.0",
   "dependencies": [
-    "jwsung91-unilink"
+    "wirestead"
   ]
 }

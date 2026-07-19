@@ -18,7 +18,7 @@
 #include <memory>
 #include <string>
 
-#include "unilink/unilink.hpp"
+#include "wirestead/wirestead.hpp"
 
 // Uses a class so that server_ is a stable member that callbacks can safely
 // capture via `this` without any dangling-pointer risk.
@@ -28,15 +28,15 @@ class EchoServer {
 
   bool start() {
     server_ =
-        unilink::tcp_server(port_)
-            .on_connect([](const unilink::ConnectionContext& ctx) {
+        wirestead::tcp_server(port_)
+            .on_connect([](const wirestead::ConnectionContext& ctx) {
               std::cout << "[connect] client " << ctx.client_id() << " from " << ctx.client_info() << "\n";
             })
-            .on_data([this](const unilink::MessageContext& ctx) { server_->send_to(ctx.client_id(), ctx.data()); })
-            .on_disconnect([](const unilink::ConnectionContext& ctx) {
+            .on_data([this](const wirestead::MessageContext& ctx) { server_->send_to(ctx.client_id(), ctx.data()); })
+            .on_disconnect([](const wirestead::ConnectionContext& ctx) {
               std::cout << "[disconnect] client " << ctx.client_id() << "\n";
             })
-            .on_error([](const unilink::ErrorContext& ctx) { std::cerr << "[error] " << ctx.message() << "\n"; })
+            .on_error([](const wirestead::ErrorContext& ctx) { std::cerr << "[error] " << ctx.message() << "\n"; })
             .build();
 
     if (!server_->start_sync()) {
@@ -59,7 +59,7 @@ class EchoServer {
 
  private:
   uint16_t port_;
-  std::unique_ptr<unilink::TcpServer> server_;
+  std::unique_ptr<wirestead::TcpServer> server_;
 };
 
 int main(int argc, char** argv) {

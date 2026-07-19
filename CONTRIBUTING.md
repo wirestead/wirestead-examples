@@ -25,11 +25,10 @@ scripts/verify.sh
 ```
 
 The script always runs `git diff --check`, builds the FetchContent preset, and
-builds the vcpkg preset. Until the official `wirestead` vcpkg port is
-available, set `VCPKG_ROOT` to a vcpkg checkout that contains the
-legacy/current `jwsung91-unilink` port, or pass `--skip-vcpkg` if that path is
-not applicable. To include installed-package validation, pass an installed
-Wirestead prefix:
+builds the vcpkg preset. Until the official registry includes `wirestead`, set
+`VCPKG_ROOT` to a vcpkg checkout or overlay that contains the new port, or pass
+`--skip-vcpkg` if that path is not applicable. To include installed-package
+validation, pass an installed Wirestead prefix:
 
 ```bash
 scripts/verify.sh --installed-prefix /path/to/wirestead/install
