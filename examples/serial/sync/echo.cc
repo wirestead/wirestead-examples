@@ -17,20 +17,20 @@
 #include <iostream>
 #include <string>
 
-#include "unilink/unilink.hpp"
+#include "wirestead/wirestead.hpp"
 
 int main(int argc, char** argv) {
   std::string device = (argc > 1) ? argv[1] : "/dev/ttyUSB0";
   uint32_t baud = (argc > 2) ? static_cast<uint32_t>(std::stoul(argv[2])) : 115200;
 
   auto port =
-      unilink::serial(device, baud)
-          .on_connect([](const unilink::ConnectionContext&) {
+      wirestead::serial(device, baud)
+          .on_connect([](const wirestead::ConnectionContext&) {
             std::cout << "Serial device connected. Type messages or '/quit' to exit.\n";
           })
-          .on_data([](const unilink::MessageContext& ctx) { std::cout << "[recv] " << ctx.data() << "\n"; })
-          .on_disconnect([](const unilink::ConnectionContext&) { std::cout << "Serial device disconnected.\n"; })
-          .on_error([](const unilink::ErrorContext& ctx) { std::cerr << "[error] " << ctx.message() << "\n"; })
+          .on_data([](const wirestead::MessageContext& ctx) { std::cout << "[recv] " << ctx.data() << "\n"; })
+          .on_disconnect([](const wirestead::ConnectionContext&) { std::cout << "Serial device disconnected.\n"; })
+          .on_error([](const wirestead::ErrorContext& ctx) { std::cerr << "[error] " << ctx.message() << "\n"; })
           .build();
 
   if (!port->start_sync()) {

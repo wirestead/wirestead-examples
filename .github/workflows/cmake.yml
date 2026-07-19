@@ -33,6 +33,10 @@ jobs:
 
   vcpkg:
     name: vcpkg
+    # Re-enable after the official vcpkg registry provides the canonical
+    # `wirestead` port. Legacy UniLink ports are not stable canonical
+    # validation paths for this repository anymore.
+    if: false
     runs-on: ubuntu-24.04
     timeout-minutes: 30
 
@@ -64,43 +68,43 @@ jobs:
     timeout-minutes: 30
 
     env:
-      UNILINK_INSTALL_PREFIX: /tmp/unilink-prefix
+      WIRESTEAD_INSTALL_PREFIX: /tmp/wirestead-prefix
 
     steps:
       - name: Checkout examples
         uses: actions/checkout@v7
         with:
-          path: unilink-examples
+          path: wirestead-examples
 
-      - name: Checkout unilink
+      - name: Checkout Wirestead
         uses: actions/checkout@v7
         with:
-          repository: jwsung91/unilink
-          ref: v0.7.3
-          path: unilink
+          repository: wirestead/wirestead
+          ref: v0.9.0
+          path: wirestead
 
       - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y cmake g++ libboost-system-dev libboost-thread-dev libspdlog-dev
 
-      - name: Configure unilink
+      - name: Configure Wirestead
         run: >
-          cmake -S unilink -B build-unilink-install
-          -DCMAKE_INSTALL_PREFIX=$UNILINK_INSTALL_PREFIX
-          -DUNILINK_BUILD_TESTS=OFF
-          -DUNILINK_BUILD_DOCS=OFF
+          cmake -S wirestead -B build-wirestead-install
+          -DCMAKE_INSTALL_PREFIX=$WIRESTEAD_INSTALL_PREFIX
+          -DWIRESTEAD_BUILD_TESTS=OFF
+          -DWIRESTEAD_BUILD_DOCS=OFF
 
-      - name: Build unilink
-        run: cmake --build build-unilink-install --parallel
+      - name: Build Wirestead
+        run: cmake --build build-wirestead-install --parallel
 
-      - name: Install unilink
-        run: cmake --install build-unilink-install
+      - name: Install Wirestead
+        run: cmake --install build-wirestead-install
 
       - name: Configure examples
-        working-directory: unilink-examples
+        working-directory: wirestead-examples
         run: cmake --preset installed
 
       - name: Build examples
-        working-directory: unilink-examples
+        working-directory: wirestead-examples
         run: cmake --build --preset installed --parallel

@@ -20,7 +20,7 @@
 #include <thread>
 #include <vector>
 
-#include "unilink/unilink.hpp"
+#include "wirestead/wirestead.hpp"
 
 /**
  * @brief Asynchronous TCP Echo Server Example
@@ -33,23 +33,23 @@ int main(int argc, char* argv[]) {
 
   // Use a shared_ptr to allow capture in callbacks
   // Note: build() returns unique_ptr, so we move it to shared_ptr
-  std::shared_ptr<unilink::wrapper::TcpServer> server;
+  std::shared_ptr<wirestead::wrapper::TcpServer> server;
 
-  auto builder = unilink::tcp_server(port);
+  auto builder = wirestead::tcp_server(port);
   builder
-      .on_connect([](const unilink::ConnectionContext& ctx) {
+      .on_connect([](const wirestead::ConnectionContext& ctx) {
         std::cout << "[Server] Client connected: ID=" << ctx.client_id() << "\n";
       })
-      .on_data([&server](const unilink::MessageContext& ctx) {
+      .on_data([&server](const wirestead::MessageContext& ctx) {
         std::cout << "[Server] Data from " << ctx.client_id() << ": " << ctx.data() << "\n";
         if (server) {
           server->send_to(ctx.client_id(), ctx.data());
         }
       })
-      .on_disconnect([](const unilink::ConnectionContext& ctx) {
+      .on_disconnect([](const wirestead::ConnectionContext& ctx) {
         std::cout << "[Server] Client disconnected: ID=" << ctx.client_id() << "\n";
       })
-      .on_error([](const unilink::ErrorContext& ctx) { std::cerr << "[Server Error] " << ctx.message() << "\n"; });
+      .on_error([](const wirestead::ErrorContext& ctx) { std::cerr << "[Server Error] " << ctx.message() << "\n"; });
 
   server = builder.build();
 

@@ -7,7 +7,7 @@ cd "$PROJECT_ROOT"
 RUN_FETCHCONTENT=1
 RUN_VCPKG=1
 RUN_INSTALLED=0
-INSTALLED_PREFIX="${UNILINK_INSTALL_PREFIX:-}"
+INSTALLED_PREFIX="${WIRESTEAD_INSTALL_PREFIX:-${UNILINK_INSTALL_PREFIX:-}}"
 
 usage() {
   cat <<'EOF'
@@ -90,7 +90,7 @@ if [[ "$RUN_INSTALLED" -eq 1 ]]; then
     exit 1
   fi
   section "Configuring installed"
-  UNILINK_INSTALL_PREFIX="$INSTALLED_PREFIX" cmake --preset installed
+  WIRESTEAD_INSTALL_PREFIX="$INSTALLED_PREFIX" cmake --preset installed
   section "Building installed"
   cmake --build --preset installed --parallel
 fi

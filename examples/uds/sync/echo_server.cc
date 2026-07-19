@@ -18,7 +18,7 @@
 #include <memory>
 #include <string>
 
-#include "unilink/unilink.hpp"
+#include "wirestead/wirestead.hpp"
 
 class UdsEchoServer {
  public:
@@ -26,15 +26,15 @@ class UdsEchoServer {
 
   bool start() {
     server_ =
-        unilink::uds_server(path_)
-            .on_connect([](const unilink::ConnectionContext& ctx) {
+        wirestead::uds_server(path_)
+            .on_connect([](const wirestead::ConnectionContext& ctx) {
               std::cout << "[connect] client " << ctx.client_id() << "\n";
             })
-            .on_data([this](const unilink::MessageContext& ctx) { server_->send_to(ctx.client_id(), ctx.data()); })
-            .on_disconnect([](const unilink::ConnectionContext& ctx) {
+            .on_data([this](const wirestead::MessageContext& ctx) { server_->send_to(ctx.client_id(), ctx.data()); })
+            .on_disconnect([](const wirestead::ConnectionContext& ctx) {
               std::cout << "[disconnect] client " << ctx.client_id() << "\n";
             })
-            .on_error([](const unilink::ErrorContext& ctx) { std::cerr << "[error] " << ctx.message() << "\n"; })
+            .on_error([](const wirestead::ErrorContext& ctx) { std::cerr << "[error] " << ctx.message() << "\n"; })
             .build();
 
     if (!server_->start_sync()) {
@@ -57,11 +57,11 @@ class UdsEchoServer {
 
  private:
   std::string path_;
-  std::unique_ptr<unilink::UdsServer> server_;
+  std::unique_ptr<wirestead::UdsServer> server_;
 };
 
 int main(int argc, char** argv) {
-  std::string path = (argc > 1) ? argv[1] : "/tmp/unilink_echo.sock";
+  std::string path = (argc > 1) ? argv[1] : "/tmp/wirestead_echo.sock";
 
   UdsEchoServer server(path);
   if (!server.start()) return 1;

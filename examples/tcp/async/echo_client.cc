@@ -18,7 +18,7 @@
 #include <memory>
 #include <string>
 
-#include "unilink/unilink.hpp"
+#include "wirestead/wirestead.hpp"
 
 /**
  * @brief Asynchronous TCP Echo Client Example
@@ -33,26 +33,26 @@ int main(int argc, char* argv[]) {
   std::cout << "--- Async TCP Echo Client ---\n";
   std::cout << "Connecting to " << host << ":" << port << " (non-blocking)\n";
 
-  std::shared_ptr<unilink::wrapper::TcpClient> client;
+  std::shared_ptr<wirestead::wrapper::TcpClient> client;
 
-  auto builder = unilink::tcp_client(host, port);
+  auto builder = wirestead::tcp_client(host, port);
   builder
-      .on_connect([&client](const unilink::ConnectionContext&) {
+      .on_connect([&client](const wirestead::ConnectionContext&) {
         std::cout << "\n[Event] Connected to server!\n"
                   << "> " << std::flush;
         if (client) {
           client->send("Auto-greeting from client!");
         }
       })
-      .on_data([](const unilink::MessageContext& ctx) {
+      .on_data([](const wirestead::MessageContext& ctx) {
         std::cout << "\n[Received] " << ctx.data() << "\n"
                   << "> " << std::flush;
       })
-      .on_disconnect([](const unilink::ConnectionContext&) {
+      .on_disconnect([](const wirestead::ConnectionContext&) {
         std::cout << "\n[Event] Disconnected from server.\n"
                   << "> " << std::flush;
       })
-      .on_error([](const unilink::ErrorContext& ctx) {
+      .on_error([](const wirestead::ErrorContext& ctx) {
         std::cerr << "\n[Error] " << ctx.message() << "\n"
                   << "> " << std::flush;
       });

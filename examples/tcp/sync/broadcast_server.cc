@@ -18,7 +18,7 @@
 #include <memory>
 #include <string>
 
-#include "unilink/unilink.hpp"
+#include "wirestead/wirestead.hpp"
 
 // Multi-client server that broadcasts every message to all connected clients.
 // Connect multiple echo_client instances to see the broadcast in action.
@@ -27,24 +27,25 @@ class BroadcastServer {
   explicit BroadcastServer(uint16_t port) : port_(port) {}
 
   bool start() {
-    server_ = unilink::tcp_server(port_)
-                  .on_connect([this](const unilink::ConnectionContext& ctx) {
-                    std::string msg = "client " + std::to_string(ctx.client_id()) + " joined";
-                    std::cout << "[connect] " << msg << " from " << ctx.client_info() << "\n";
-                    server_->broadcast("*** " + msg + " ***");
-                  })
-                  .on_data([this](const unilink::MessageContext& ctx) {
-                    std::string msg = "[" + std::to_string(ctx.client_id()) + "] " + std::string(ctx.data());
-                    std::cout << msg << "\n";
-                    server_->broadcast(msg);
-                  })
-                  .on_disconnect([this](const unilink::ConnectionContext& ctx) {
-                    std::string msg = "client " + std::to_string(ctx.client_id()) + " left";
-                    std::cout << "[disconnect] " << msg << "\n";
-                    server_->broadcast("*** " + msg + " ***");
-                  })
-                  .on_error([](const unilink::ErrorContext& ctx) { std::cerr << "[error] " << ctx.message() << "\n"; })
-                  .build();
+    server_ =
+        wirestead::tcp_server(port_)
+            .on_connect([this](const wirestead::ConnectionContext& ctx) {
+              std::string msg = "client " + std::to_string(ctx.client_id()) + " joined";
+              std::cout << "[connect] " << msg << " from " << ctx.client_info() << "\n";
+              server_->broadcast("*** " + msg + " ***");
+            })
+            .on_data([this](const wirestead::MessageContext& ctx) {
+              std::string msg = "[" + std::to_string(ctx.client_id()) + "] " + std::string(ctx.data());
+              std::cout << msg << "\n";
+              server_->broadcast(msg);
+            })
+            .on_disconnect([this](const wirestead::ConnectionContext& ctx) {
+              std::string msg = "client " + std::to_string(ctx.client_id()) + " left";
+              std::cout << "[disconnect] " << msg << "\n";
+              server_->broadcast("*** " + msg + " ***");
+            })
+            .on_error([](const wirestead::ErrorContext& ctx) { std::cerr << "[error] " << ctx.message() << "\n"; })
+            .build();
 
     if (!server_->start_sync()) {
       std::cerr << "Failed to start server on port " << port_ << "\n";
@@ -73,7 +74,7 @@ class BroadcastServer {
 
  private:
   uint16_t port_;
-  std::unique_ptr<unilink::TcpServer> server_;
+  std::unique_ptr<wirestead::TcpServer> server_;
 };
 
 int main(int argc, char** argv) {

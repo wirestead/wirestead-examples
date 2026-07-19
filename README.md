@@ -1,20 +1,20 @@
-# unilink-examples
+# wirestead-examples
 
-[![CMake](https://github.com/unilink-lab/unilink-examples/actions/workflows/cmake.yml/badge.svg)](https://github.com/unilink-lab/unilink-examples/actions/workflows/cmake.yml)
+[![CMake](https://github.com/wirestead/unilink-examples/actions/workflows/cmake.yml/badge.svg)](https://github.com/wirestead/unilink-examples/actions/workflows/cmake.yml)
 
-Practical examples for using `unilink` in real-world C++ communication
+Practical examples for using Wirestead in real-world C++ communication
 scenarios.
 
 This repository demonstrates how to build TCP, UDP, Serial, and Unix Domain
-Socket applications using `unilink`'s unified async communication interface.
+Socket applications using Wirestead's unified async communication interface.
 
-## What is unilink?
+## What is Wirestead?
 
-`unilink` is a modern C++ communication library that provides a unified
+Wirestead is a modern C++ communication library that provides a unified
 interface for serial, network, and local IPC transports.
 
 Core library:
-https://github.com/jwsung91/unilink
+https://github.com/wirestead/wirestead
 
 ## Examples
 
@@ -30,10 +30,10 @@ layout from the core repository.
 
 ## Build
 
-### Option 1: Build without installing unilink
+### Option 1: Build without installing Wirestead
 
-This is the quickest path for trying the examples. CMake fetches `unilink`
-v0.7.5 as configured in `cmake/FetchUnilink.cmake`.
+This is the quickest path for trying the examples. CMake fetches Wirestead
+v0.9.0 as configured in `cmake/FetchWirestead.cmake`.
 
 ```bash
 cmake --preset fetchcontent
@@ -44,47 +44,48 @@ This mode requires network access during the first configure step.
 
 ### Option 2: Use vcpkg
 
-Use this when you want `unilink` and its dependencies managed by vcpkg. The
-vcpkg package is named `jwsung91-unilink` and exports the CMake package
-`unilink`.
+Use this with a vcpkg checkout that provides the canonical `wirestead` port.
+The examples prefer `wiresteadConfig.cmake` and fall back to the legacy
+`unilinkConfig.cmake` package only when an installed compatibility package is
+available.
 
 ```bash
 cmake --preset vcpkg
 cmake --build --preset vcpkg
 ```
 
-Set `VCPKG_ROOT` to your vcpkg checkout path before running this command.
-Use a vcpkg checkout that contains `jwsung91-unilink` 0.7.2 or newer. The
-official `microsoft/vcpkg` registry includes `jwsung91-unilink` 0.7.2.
+Set `VCPKG_ROOT` to your vcpkg checkout path before running this command. Until
+the official registry includes `wirestead`, use a vcpkg checkout or overlay that
+contains the new port, or skip this preset during local validation.
 
 ```bash
 git clone https://github.com/microsoft/vcpkg "$VCPKG_ROOT"
 "$VCPKG_ROOT/bootstrap-vcpkg.sh"
 ```
 
-### Option 3: Use a local unilink source checkout
+### Option 3: Use a local Wirestead source checkout
 
 Use this when you already have the core repository locally and want to avoid
 downloading it again.
 
 ```bash
 cmake --preset fetchcontent \
-  -DFETCHCONTENT_SOURCE_DIR_UNILINK=/path/to/unilink
+  -DFETCHCONTENT_SOURCE_DIR_WIRESTEAD=/path/to/wirestead
 cmake --build --preset fetchcontent
 ```
 
-### Option 4: Use an installed unilink package
+### Option 4: Use an installed Wirestead package
 
 ```bash
-UNILINK_INSTALL_PREFIX=/path/to/unilink/install cmake --preset installed
+WIRESTEAD_INSTALL_PREFIX=/path/to/wirestead/install cmake --preset installed
 cmake --build --preset installed
 ```
 
-Installed-package mode assumes `unilink` and its exported dependencies are
+Installed-package mode assumes Wirestead and its exported dependencies are
 discoverable by CMake, typically via `CMAKE_PREFIX_PATH` or a system install
-location. `unilink` v0.7.5 resolves its exported dependencies from
-`unilinkConfig.cmake`, so consumers do not need to call `find_package(spdlog)`
-before `find_package(unilink CONFIG REQUIRED)`.
+location. Wirestead v0.9.x resolves its exported dependencies from
+`wiresteadConfig.cmake`, so consumers do not need to call `find_package(spdlog)`
+before `find_package(wirestead CONFIG REQUIRED)`.
 
 ## Run
 
@@ -117,9 +118,9 @@ transport-specific run commands.
 
 - CMake 3.28
 - GCC 13
-- `unilink` v0.7.5
-- vcpkg package `jwsung91-unilink` 0.7.2
-- Installed-package mode with a local `unilink` v0.7.5 install prefix
+- Wirestead v0.9.0
+- vcpkg package `wirestead` 0.9.0
+- Installed-package mode with a local Wirestead v0.9.x install prefix
 
 ## Repository Layout
 
@@ -129,7 +130,7 @@ transport-specific run commands.
 ├── CMakePresets.json
 ├── CONTRIBUTING.md
 ├── cmake/
-│   └── FetchUnilink.cmake
+│   └── FetchWirestead.cmake
 ├── examples/
 │   ├── README.md
 │   ├── tcp/

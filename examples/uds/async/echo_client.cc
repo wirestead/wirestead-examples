@@ -18,38 +18,38 @@
 #include <memory>
 #include <string>
 
-#include "unilink/unilink.hpp"
+#include "wirestead/wirestead.hpp"
 
 /**
  * @brief Asynchronous UDS Echo Client Example
  */
 int main(int argc, char* argv[]) {
-  std::string path = "/tmp/unilink_echo.sock";
+  std::string path = "/tmp/wirestead_echo.sock";
   if (argc > 1) path = argv[1];
 
   std::cout << "--- Async UDS Echo Client ---\n";
   std::cout << "Connecting to " << path << " (non-blocking)\n";
 
-  std::shared_ptr<unilink::wrapper::UdsClient> client;
+  std::shared_ptr<wirestead::wrapper::UdsClient> client;
 
-  auto builder = unilink::uds_client(path);
+  auto builder = wirestead::uds_client(path);
   builder
-      .on_connect([&client](const unilink::ConnectionContext&) {
+      .on_connect([&client](const wirestead::ConnectionContext&) {
         std::cout << "\n[Event] Connected to UDS server!\n"
                   << "> " << std::flush;
         if (client) {
           client->send("Hello UDS!");
         }
       })
-      .on_data([](const unilink::MessageContext& ctx) {
+      .on_data([](const wirestead::MessageContext& ctx) {
         std::cout << "\n[Received] " << ctx.data() << "\n"
                   << "> " << std::flush;
       })
-      .on_disconnect([](const unilink::ConnectionContext&) {
+      .on_disconnect([](const wirestead::ConnectionContext&) {
         std::cout << "\n[Event] Disconnected.\n"
                   << "> " << std::flush;
       })
-      .on_error([](const unilink::ErrorContext& ctx) {
+      .on_error([](const wirestead::ErrorContext& ctx) {
         std::cerr << "\n[Error] " << ctx.message() << "\n"
                   << "> " << std::flush;
       });

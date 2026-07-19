@@ -13,7 +13,7 @@
       "cacheVariables": {
         "CMAKE_CXX_STANDARD": "20",
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-        "UNILINK_EXAMPLES_USE_FETCHCONTENT": "ON"
+        "WIRESTEAD_EXAMPLES_USE_FETCHCONTENT": "ON"
       }
     },
     {
@@ -24,18 +24,18 @@
         "CMAKE_CXX_STANDARD": "20",
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
         "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
-        "UNILINK_EXAMPLES_USE_FETCHCONTENT": "OFF"
+        "WIRESTEAD_EXAMPLES_USE_FETCHCONTENT": "OFF"
       }
     },
     {
       "name": "installed",
-      "displayName": "Installed unilink package",
+      "displayName": "Installed Wirestead package",
       "binaryDir": "${sourceDir}/build/${presetName}",
       "cacheVariables": {
         "CMAKE_CXX_STANDARD": "20",
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-        "CMAKE_PREFIX_PATH": "$env{UNILINK_INSTALL_PREFIX}",
-        "UNILINK_EXAMPLES_USE_FETCHCONTENT": "OFF"
+        "CMAKE_PREFIX_PATH": "$env{WIRESTEAD_INSTALL_PREFIX}",
+        "WIRESTEAD_EXAMPLES_USE_FETCHCONTENT": "OFF"
       }
     }
   ],

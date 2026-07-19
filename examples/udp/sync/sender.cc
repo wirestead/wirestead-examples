@@ -17,16 +17,16 @@
 #include <iostream>
 #include <string>
 
-#include "unilink/unilink.hpp"
+#include "wirestead/wirestead.hpp"
 
 int main(int argc, char** argv) {
   std::string host = (argc > 1) ? argv[1] : "127.0.0.1";
   uint16_t port = (argc > 2) ? static_cast<uint16_t>(std::stoi(argv[2])) : 9000;
 
   auto sender =
-      unilink::udp_client(0)
+      wirestead::udp_client(0)
           .remote(host, port)
-          .on_error([](const unilink::ErrorContext& ctx) { std::cerr << "[error] " << ctx.message() << "\n"; })
+          .on_error([](const wirestead::ErrorContext& ctx) { std::cerr << "[error] " << ctx.message() << "\n"; })
           .build();
 
   if (!sender->start_sync()) {

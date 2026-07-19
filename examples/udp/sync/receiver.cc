@@ -16,15 +16,15 @@
 
 #include <iostream>
 
-#include "unilink/unilink.hpp"
+#include "wirestead/wirestead.hpp"
 
 int main(int argc, char** argv) {
   uint16_t port = (argc > 1) ? static_cast<uint16_t>(std::stoi(argv[1])) : 9000;
 
   auto receiver =
-      unilink::udp_client(port)
-          .on_data([](const unilink::MessageContext& ctx) { std::cout << "[recv] " << ctx.data() << "\n"; })
-          .on_error([](const unilink::ErrorContext& ctx) { std::cerr << "[error] " << ctx.message() << "\n"; })
+      wirestead::udp_client(port)
+          .on_data([](const wirestead::MessageContext& ctx) { std::cout << "[recv] " << ctx.data() << "\n"; })
+          .on_error([](const wirestead::ErrorContext& ctx) { std::cerr << "[error] " << ctx.message() << "\n"; })
           .auto_start(true)
           .build();
 

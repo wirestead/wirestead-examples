@@ -19,7 +19,7 @@
 #include <string>
 #include <thread>
 
-#include "unilink/unilink.hpp"
+#include "wirestead/wirestead.hpp"
 
 /**
  * @brief Asynchronous UDP Receiver Example
@@ -31,8 +31,8 @@ int main(int argc, char* argv[]) {
   std::cout << "--- Async UDP Receiver ---\n";
   std::cout << "Listening on port " << port << " (non-blocking)\n";
 
-  auto receiver = unilink::udp_client(port)
-                      .on_data([](const unilink::MessageContext& ctx) {
+  auto receiver = wirestead::udp_client(port)
+                      .on_data([](const wirestead::MessageContext& ctx) {
                         std::cout << "[UDP Recv] from " << ctx.client_info() << ": " << ctx.data() << "\n";
                       })
                       .build();

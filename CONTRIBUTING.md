@@ -1,12 +1,12 @@
 # Contributing
 
-This repository contains standalone examples for `unilink`. Keep changes scoped
+This repository contains standalone examples for Wirestead. Keep changes scoped
 to example code, example build integration, and documentation that helps users
 build or run the examples.
 
 ## Formatting
 
-The repository follows the same formatting configuration as the core `unilink`
+The repository follows the same formatting configuration as the core Wirestead
 repository:
 
 - C++ files use `.clang-format`.
@@ -25,13 +25,13 @@ scripts/verify.sh
 ```
 
 The script always runs `git diff --check`, builds the FetchContent preset, and
-builds the vcpkg preset. Set `VCPKG_ROOT` to a vcpkg checkout that contains
-`jwsung91-unilink` 0.7.2 or newer, or pass `--skip-vcpkg` if that path is not
-applicable. To include installed-package validation, pass an installed
-`unilink` prefix:
+builds the vcpkg preset. Until the official registry includes `wirestead`, set
+`VCPKG_ROOT` to a vcpkg checkout or overlay that contains the new port, or pass
+`--skip-vcpkg` if that path is not applicable. To include installed-package
+validation, pass an installed Wirestead prefix:
 
 ```bash
-scripts/verify.sh --installed-prefix /path/to/unilink/install
+scripts/verify.sh --installed-prefix /path/to/wirestead/install
 ```
 
 Equivalent manual commands are:
@@ -47,7 +47,7 @@ cmake --build --preset vcpkg --parallel
 ```
 
 ```bash
-UNILINK_INSTALL_PREFIX=/path/to/unilink/install cmake --preset installed
+WIRESTEAD_INSTALL_PREFIX=/path/to/wirestead/install cmake --preset installed
 cmake --build --preset installed --parallel
 ```
 
