@@ -1,6 +1,6 @@
 # wirestead-examples
 
-[![CMake](https://github.com/wirestead/unilink-examples/actions/workflows/cmake.yml/badge.svg)](https://github.com/wirestead/unilink-examples/actions/workflows/cmake.yml)
+[![CMake](https://github.com/wirestead/wirestead-examples/actions/workflows/cmake.yml/badge.svg)](https://github.com/wirestead/wirestead-examples/actions/workflows/cmake.yml)
 
 Practical examples for using Wirestead in real-world C++ communication
 scenarios.
