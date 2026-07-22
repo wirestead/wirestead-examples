@@ -33,10 +33,6 @@ jobs:
 
   vcpkg:
     name: vcpkg
-    # Re-enable after the official vcpkg registry provides the canonical
-    # `wirestead` port. Legacy UniLink ports are not stable canonical
-    # validation paths for this repository anymore.
-    if: false
     runs-on: ubuntu-24.04
     timeout-minutes: 30
 
