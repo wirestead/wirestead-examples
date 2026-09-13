@@ -119,7 +119,7 @@ transport-specific run commands.
 - CMake 3.28
 - GCC 13
 - Wirestead v0.9.6
-- vcpkg package `wirestead` 0.9.5
+- vcpkg package `wirestead` 0.9.6
 - Installed-package mode with a local Wirestead v0.9.x install prefix
 
 ## Repository Layout
