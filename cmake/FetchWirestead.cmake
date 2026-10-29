@@ -16,7 +16,7 @@ set(WIRESTEAD_ENABLE_INSTALL
 FetchContent_Declare(
   wirestead
   GIT_REPOSITORY https://github.com/wirestead/wirestead.git
-  GIT_TAG v0.10.0
+  GIT_TAG v0.10.1
 )
 
 FetchContent_MakeAvailable(wirestead)
